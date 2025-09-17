@@ -1,0 +1,132 @@
+.contactSection {
+  position: relative; /* Necesario para que el ::before se posicione dentro */
+  padding: 4rem 2rem;
+  background: #000;
+  color: #fff;
+  font-family: "Roboto Condensed", sans-serif;
+  margin-top: 130px;
+  min-height: 80vh;
+  overflow: hidden; /* evita que el ::before sobresalga */
+}
+
+.contactSection::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1)),
+    url("/texture.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.85;
+  z-index: 0; /* se queda atrás */
+}
+
+.contactContainer {
+  position: relative; /* para ponerse encima del ::before */
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+/* Columna izquierda */
+.info {
+  flex: 1;
+  min-width: 250px;
+}
+
+.info h2 {
+  font-size: 2.5rem;
+  color: #e50914;
+  margin-bottom: 1.5rem;
+  font-family: "HeadlinesRegular", sans-serif;
+}
+
+.info p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Formulario */
+.form {
+  flex: 1.2;
+  min-width: 300px;
+  background: rgba(20, 20, 20, 0.75);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  backdrop-filter: blur(6px);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #fff;
+  font-size: 1rem;
+}
+
+input,
+textarea {
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border: 1px solid #e50914;
+  outline: none;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Botón */
+button {
+  padding: 1rem;
+  background: #e50914;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #b20710;
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  background: #444;
+  cursor: not-allowed;
+}
+
+/* Mensajes */
+.success {
+  color: #00e676;
+  margin-top: 0.5rem;
+}
+
+.error {
+  color: #ff5252;
+  margin-top: 0.5rem;
+}

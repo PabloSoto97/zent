@@ -1,0 +1,172 @@
+.container {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1)),
+    url("/texture.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 140px 20px 40px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 70px;
+}
+
+.detailCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 1300px;
+  width: 100%;
+
+  padding: 30px;
+  border-radius: 1px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+  height: 700px;
+}
+
+.imgWrapper {
+  background: #f6f6f6;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.imagen {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.nombre {
+  font-size: 2rem;
+  font-weight: 500;
+  font-family: "HeadlinesRegular", sans-serif;
+}
+
+.precio {
+  font-size: 1.25rem;
+  color: #ffffff;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin-top: -8px;
+}
+
+.descripcion {
+  font-size: 1.1rem;
+  color: #ccc;
+  line-height: 1.4;
+  word-spacing: 0.1em;
+}
+.stock {
+  font-size: 1.1rem;
+  color: #009e28;
+  line-height: 1.5;
+  font-weight: bold;
+}
+
+.btnComprar {
+  display: inline-block; /* 🔹 Hace que <a> se comporte como botón */
+  text-align: center;
+  text-decoration: none; /* 🔹 Quita subrayado en <a> */
+  background: #e9e9e9;
+  color: #000;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 50px;
+}
+.btnComprar:hover {
+  background: #8d8d8d;
+}
+
+.volver {
+  margin-top: 12px;
+  color: #00ff66;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.volver:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  .detailCard {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 👇 ya estaba todo lo tuyo, solo agrego la galería */
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.thumb {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background: #fff;
+  transition: 0.2s ease;
+}
+
+.thumb:hover {
+  border-color: #00ff66;
+}
+
+.active {
+  border-color: #00ff66;
+}
+.mediosPago {
+  margin-top: 30px;
+  border: 0.2px solid rgb(145, 145, 145);
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.mediosPago h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #009e28;
+}
+
+.mediosPago p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #ccc;
+}
+
+.tarjetas {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tarjetas img {
+  height: 40px;
+  object-fit: contain;
+  background: #fff;
+  padding: 5px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}

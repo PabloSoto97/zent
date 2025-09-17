@@ -1,0 +1,196 @@
+@font-face {
+  font-family: "HeadlinesRegular";
+  src: url("../../assets/fonts/HEADOH.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* === Sección principal === */
+.about {
+  margin-top: 80px;
+  position: relative;
+  background-color: #000;
+  color: #fff;
+  padding: 4rem 2rem;
+  text-align: center;
+  overflow: hidden;
+  min-height: 80vh;
+}
+
+.about::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1)),
+    url("/texture.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.85;
+  z-index: 0;
+}
+
+.about * {
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: #e50914;
+  font-family: "HeadlinesRegular", sans-serif;
+}
+
+.intro {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.9;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.intro span {
+  color: #e50914;
+  font-weight: bold;
+}
+
+/* === Contenedor de Cards === */
+.cards {
+  margin-right: 130px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* 🔥 Centra las cards */
+  gap: 10rem; /* 🔥 Menos espacio para que queden más juntas */
+}
+
+/* 🔥 Cards más grandes */
+.outer {
+  width: 360px; /* antes 300px */
+  height: 240px; /* antes 200px */
+  position: relative;
+  margin: 20px;
+}
+
+.card {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 9px;
+  border: solid 1px rgba(255, 255, 255, 0.2);
+  background: rgba(20, 20, 20, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 3rem;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(229, 9, 20, 0.4);
+}
+
+/* === Dot animado === */
+.dot {
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 0 10px #ffffff;
+  border-radius: 50%;
+  z-index: 2;
+  top: 10%;
+  left: 10%;
+  animation: moveDot 6s linear infinite;
+}
+
+@keyframes moveDot {
+  0%,
+  100% {
+    top: 10%;
+    left: 10%;
+  }
+  25% {
+    top: 10%;
+    left: 90%;
+  }
+  50% {
+    top: 90%;
+    left: 90%;
+  }
+  75% {
+    top: 90%;
+    left: 10%;
+  }
+}
+
+/* === Líneas === */
+.line {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.4);
+  z-index: 1;
+}
+
+.topl {
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+}
+
+.bottoml {
+  bottom: 10%;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+}
+
+.leftl {
+  top: 10%;
+  left: 10%;
+  width: 1px;
+  height: 80%;
+}
+
+.rightl {
+  top: 10%;
+  right: 10%;
+  width: 1px;
+  height: 80%;
+}
+
+/* Ray decorativo */
+.ray {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
+  border-radius: 9px;
+  pointer-events: none;
+}
+
+.cardTitle {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #e50914;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.card p {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  font-family: "Roboto Condensed", sans-serif;
+}
+@media (max-width: 768px) {
+  .outer {
+    width: 90%;
+    height: auto;
+  }
+}

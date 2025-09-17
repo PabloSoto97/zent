@@ -1,0 +1,196 @@
+@font-face {
+  font-family: "HeadlinesRegular";
+  src: url("../../assets/fonts/HEADOH.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.productosContainer {
+  margin-top: 130px; /* deja espacio para el NavBar */
+  padding: 20px 16px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1)),
+    url("/texture.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  min-height: 100vh;
+}
+
+/* centro el contenido y limito ancho */
+.inner {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* título centrado */
+.titulo {
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 10px 0 24px;
+  text-align: center;
+  font-family: "HeadlinesRegular", sans-serif;
+  color: #e50914;
+}
+
+/* layout: sidebar + productos */
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Sidebar */
+.sidebar {
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(180, 180, 180, 0.664);
+  opacity: 0.85;
+  color: #fff;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.sidebar h4 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #e50914;
+}
+
+.select {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border 0.3s ease;
+}
+
+.select:focus {
+  border: 1px solid #e50914;
+  outline: none;
+}
+
+/* grid responsivo de cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+/* imagen dentro de la card */
+.imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* --- Card --- */
+.card2 {
+  width: 100%;
+  background: #0b0b0b;
+  border: 1px solid rgba(112, 112, 112, 0.664);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.card2:hover {
+  cursor: pointer;
+}
+
+/* imagen fija */
+.firstcontent {
+  height: 260px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+  background: #f6f6f6;
+  border-radius: 12px 12px 0 0;
+}
+
+.secondcontent {
+  display: none; /* ya no se usa flip */
+}
+
+/* info (nombre + precio) */
+.info {
+  padding: 12px 14px 50px; /* espacio extra para el botón */
+  background: #0b0b0b;
+  color: #ff1010;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  text-align: center;
+}
+
+.nombre {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.precio {
+  margin: 0;
+  color: rgb(217, 218, 218);
+  font-size: 0.9375rem;
+  font-weight: 400;
+}
+
+/* Botón oculto */
+.boton {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: inherit;
+  border-color: transparent;
+  border: 1px solid;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.5s ease;
+  letter-spacing: 2px;
+}
+
+/* al hover aparece el botón */
+.card2:hover .boton {
+  opacity: 1;
+  visibility: visible;
+  bottom: 10px;
+}
+
+/* --- responsive --- */
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    display: none;
+  }
+  .firstcontent {
+    height: 220px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .inner {
+    max-width: 1500px;
+  }
+}
