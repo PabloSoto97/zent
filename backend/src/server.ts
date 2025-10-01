@@ -4,7 +4,9 @@ import dotenv from "dotenv";
 import path from "path";
 
 // 👇 carga variables desde backend/.env
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
+}
 
 // Rutas
 import authRouter from "./routes/auth";
