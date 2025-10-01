@@ -9,22 +9,25 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     try {
-      const res = await fetch(`https://zent-app.onrender.com/auth/login`, {
+      const res = await fetch("https://zent-app.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
       if (!res.ok) {
-        throw new Error("Credenciales inválidas");
+        const msg = await res.json();
+        throw new Error(msg.error || "Credenciales inválidas");
       }
 
       const data = await res.json();
+
+      // 🔑 Guardamos el token en localStorage
       localStorage.setItem("token", data.token);
 
+      // Redirigimos al panel admin
       navigate("/admin");
     } catch (err: any) {
       setError(err.message);
@@ -32,37 +35,37 @@ const Login = () => {
   };
 
   return (
-    <div className="mt-48 text-2xl text-white">
-      <div className="max-w-2xl border-white border rounded-2xl mx-auto flex flex-col gap-2.5 p-6">
-        <h2>Login Admin</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="flex flex-col">
-            <label>Usuario:</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="p-2 rounded border border-gray-600 text-black"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>Contraseña:</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="p-2 rounded border border-gray-600 text-black"
-            />
-          </div>
-          <button
-            className="border border-green-800 rounded-2xl p-2 mt-4 hover:bg-green-800 hover:text-white transition"
-            type="submit"
-          >
-            Ingresar
-          </button>
-        </form>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-      </div>
+    <div className="flex justify-center items-center h-screen bg-gray-900 text-white">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-gray-800 p-6 rounded-lg shadow-lg w-80"
+      >
+        <h2 className="text-2xl font-bold mb-4 text-center">Login Admin</h2>
+
+        {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
+
+        <input
+          type="text"
+          placeholder="Usuario"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
+        />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 mb-3 rounded bg-gray-700 text-white"
+        />
+
+        <button
+          type="submit"
+          className="w-full bg-red-600 hover:bg-red-700 py-2 rounded font-semibold"
+        >
+          Ingresar
+        </button>
+      </form>
     </div>
   );
 };

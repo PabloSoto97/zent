@@ -18,17 +18,16 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       }
 
       try {
-        const res = await fetch("http://localhost:4000/auth/verify", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          "https://zent-app.onrender.com/api/auth/verify",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-        if (res.ok) {
-          setIsValid(true);
-        } else {
-          setIsValid(false);
-        }
+        setIsValid(res.ok);
       } catch (err) {
         setIsValid(false);
       }
