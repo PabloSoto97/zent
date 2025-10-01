@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // versión de JS a la que se compila
+    "module": "CommonJS", // Node usa CommonJS
+    "rootDir": "./src", // dónde está el código fuente
+    "outDir": "./dist", // a dónde compilar
+    "strict": true, // activa chequeos estrictos
+    "esModuleInterop": true, // para importar libs como express
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true // acelera build, evita errores de libs
+  },
+  "include": ["src"], // solo compilamos lo que está en src
+  "exclude": ["node_modules", "dist"] // ignoramos estas carpetas
+}
