@@ -12,7 +12,7 @@ const Login = () => {
     setError("");
 
     try {
-      const res = await fetch("https://zent-app.onrender.com/auth/login", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -33,33 +33,35 @@ const Login = () => {
 
   return (
     <div className="mt-48 text-2xl text-white">
-      <div className="max-w-2xl border-white border rounded-2xl mx-auto flex flex-col gap-2.5">
+      <div className="max-w-2xl border-white border rounded-2xl mx-auto flex flex-col gap-2.5 p-6">
         <h2>Login Admin</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-2">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="flex flex-col">
             <label>Usuario:</label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              className="p-2 rounded border border-gray-600 text-black"
             />
           </div>
-          <div className="mb-2">
+          <div className="flex flex-col">
             <label>Contraseña:</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="p-2 rounded border border-gray-600 text-black"
             />
           </div>
           <button
-            className="border border-green-800 rounded-2xl p-2 ml-60"
+            className="border border-green-800 rounded-2xl p-2 mt-4 hover:bg-green-800 hover:text-white transition"
             type="submit"
           >
             Ingresar
           </button>
         </form>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="text-red-500 mt-2">{error}</p>}
       </div>
     </div>
   );

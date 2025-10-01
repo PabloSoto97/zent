@@ -25,13 +25,11 @@ export const Productos = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // 🔹 Filtrado por categoría
   const productosFiltrados =
     categoria === "Todas"
       ? productos
       : productos.filter((p) => p.categoria.nombre === categoria);
 
-  // 🔹 Ordenamiento por precio
   const productosOrdenados = [...productosFiltrados].sort((a, b) =>
     orden === "asc" ? a.precio - b.precio : b.precio - a.precio
   );
@@ -41,7 +39,6 @@ export const Productos = () => {
       try {
         setLoading(true);
 
-        // 🔹 Traigo productos y categorías
         const [productosRes, categoriasRes] = await Promise.all([
           axios.get<Producto[]>(`${import.meta.env.VITE_API_URL}/productos`),
           axios.get<Categoria[]>(`${import.meta.env.VITE_API_URL}/categorias`),
@@ -69,7 +66,6 @@ export const Productos = () => {
         <h2 className={styles.titulo}>Productos</h2>
 
         <div className="flex flex-col md:flex-row md:items-start md:gap-6">
-          {/* 🔹 Sidebar con filtros */}
           <aside className="mb-4 md:mb-0 md:w-1/6 md:pl-16 pl-1">
             <ProductFilters
               categoria={categoria}
@@ -80,7 +76,6 @@ export const Productos = () => {
             />
           </aside>
 
-          {/* 🔹 Grilla de productos */}
           <div className="flex-1">
             {loading ? (
               <div className="flex flex-col justify-center items-center min-h-[200px]">

@@ -20,26 +20,28 @@ app.use(cors());
 app.use(express.json());
 
 // ======================
-// 🔹 Rutas públicas
+// 🔹 Rutas API públicas
+// ======================
+app.use("/api/auth", authRouter);
+app.use("/api/productos", productosRouter);
+app.use("/api/checkout", checkoutRouter);
+app.use("/api/categorias", categoriasRoutes);
+
+// 🔹 Rutas API privadas (panel admin)
+app.use("/api/admin/categorias", requireAuth, categoriasRoutes);
+app.use("/api/admin/productos", requireAuth, productosRouter);
+
+// ======================
+// 🔹 Servir frontend
 // ======================
 app.use(express.static(path.join(__dirname, "../frontend-dist")));
-
-app.use((req, res) => {
+app.get("*", (req, res) => {
+  if (req.path.startsWith("/api")) {
+    return res.status(404).json({ error: "API route not found" });
+  }
   res.sendFile(path.join(__dirname, "../frontend-dist/index.html"));
 });
 
-app.use("/auth", authRouter);
-app.use("/productos", productosRouter);
-app.use("/checkout", checkoutRouter);
-app.use("/categorias", categoriasRoutes); // <- esta queda pública
-app.use("/public", express.static("public"));
-
-// ======================
-// 🔹 Rutas privadas (panel admin)
-// ======================
-app.use("/admin/categorias", requireAuth, categoriasRoutes);
-app.use("/admin/productos", requireAuth, productosRouter);
-// 👆 solo se protegen las de admin, no las de cliente
 // ======================
 // 🔹 Start Server
 // ======================
