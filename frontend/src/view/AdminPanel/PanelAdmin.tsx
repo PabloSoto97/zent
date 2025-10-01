@@ -97,10 +97,13 @@ export default function PanelAdmin() {
       };
 
       if (editing) {
-        await axios.put(`http://localhost:4000/productos/${editing.id}`, data);
+        await axios.put(
+          `https://zent-app.onrender.com/productos/${editing.id}`,
+          data
+        );
         alert("✅ Producto actualizado");
       } else {
-        await axios.post("http://localhost:4000/productos", data);
+        await axios.post("https://zent-app.onrender.com/productos", data);
         alert("✅ Producto creado");
       }
 
@@ -147,7 +150,7 @@ export default function PanelAdmin() {
   // =========================
   const handleDelete = async (id: number) => {
     if (!confirm("¿Seguro que quieres eliminar este producto?")) return;
-    await axios.delete(`http://localhost:4000/productos/${id}`);
+    await axios.delete(`https://zent-app.onrender.com/productos/${id}`);
     fetchProductos();
   };
 
