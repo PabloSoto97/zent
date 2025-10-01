@@ -35,10 +35,7 @@ app.use("/api/admin/productos", requireAuth, productosRouter);
 // 🔹 Servir frontend
 // ======================
 app.use(express.static(path.join(__dirname, "../frontend-dist")));
-app.get("/:path*", (req, res) => {
-  if (req.path.startsWith("/api")) {
-    return res.status(404).json({ error: "API route not found" });
-  }
+app.get(/^\/(?!api).*$/, (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend-dist/index.html"));
 });
 
