@@ -6,11 +6,10 @@ import path from "path";
 // 👇 carga variables desde backend/.env
 if (process.env.NODE_ENV !== "production") {
   // Asegúrate de que tienes 'dotenv' instalado si usas require
-  // Si usas require('dotenv').config, no hace falta el require de arriba
   require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 }
 
-// Rutas (Asegúrate de que tus rutas de 'upload' de imágenes estén dentro de 'productosRouter' o aquí)
+// Rutas
 import authRouter from "./routes/auth";
 import productosRouter from "./routes/productos";
 import checkoutRouter from "./routes/checkout";
@@ -22,18 +21,26 @@ import { requireAuth } from "./middleware/authMiddleware";
 const app = express();
 
 // ======================
-// 🔹 CORS (SOLUCIÓN COMPLETA para Vercel)
+// 💡 FIX 1: Habilitar el proxy para cookies seguras en producción
+// Esto es necesario porque estás detrás de un proxy (Render, Heroku, etc.)
+// y es esencial para que las cookies Secure funcionen.
+// ======================
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1); // Confía en el primer proxy (Render/Vercel)
+}
+
+// ======================
+// 🔹 CORS (CONFIGURACIÓN FINAL para Vercel/Producción)
 // ======================
 app.use(
   cors({
     origin: [
       "http://localhost:5173", // Frontend en dev
-      "https://zentcommerce.vercel.app", // Dominio de Producción (el que está funcionando)
-      // Puedes añadir aquí otros dominios de Vercel Preview si los tienes.
+      "https://zentcommerce.vercel.app", // Dominio de Producción
     ],
-    // 💡 FIX: Incluir explícitamente todos los métodos, incluyendo OPTIONS (preflight requests)
+    // FIX: Incluir explícitamente todos los métodos
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-    credentials: true,
+    credentials: true, // Necesario para enviar cookies
   })
 );
 
@@ -48,7 +55,6 @@ app.use("/api/checkout", checkoutRouter);
 app.use("/api/categorias", categoriasRoutes);
 
 // 🔹 Rutas API privadas (panel admin)
-// Nota: La ruta de subida de imágenes (upload) debe estar aquí o dentro de productosRouter
 app.use("/api/admin/categorias", requireAuth, categoriasRoutes);
 app.use("/api/admin/productos", requireAuth, productosRouter);
 

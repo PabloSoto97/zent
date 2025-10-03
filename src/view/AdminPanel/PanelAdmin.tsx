@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import type { ReactNode } from "react"; // Mantenemos ReactNode aunque no lo uses aquí, por si lo necesitas.
 
 interface Categoria {
   id: number;
@@ -42,35 +43,63 @@ export default function PanelAdmin() {
     fetchCategorias();
   }, []);
 
+  // 💡 FUNCIÓN HELPER PARA OBTENER EL HEADER DE AUTORIZACIÓN
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("Token no encontrado. Redirigir a login si es necesario.");
+      // Opcional: podrías forzar la redirección aquí si no confías en ProtectedRoute
+      return {};
+    }
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  };
+
   const fetchProductos = async () => {
-    const res = await axios.get<Producto[]>(
-      `${import.meta.env.VITE_API_URL}/admin/productos`,
-      { withCredentials: true }
-    );
-    setProductos(res.data);
+    try {
+      // 💡 CORREGIDO: Usando el header de Authorization
+      const res = await axios.get<Producto[]>(
+        `${import.meta.env.VITE_API_URL}/admin/productos`,
+        getAuthHeaders() // Usa el header de autenticación
+      );
+      setProductos(res.data);
+    } catch (error) {
+      console.error("Error al cargar productos:", error);
+    }
   };
 
   const fetchCategorias = async () => {
-    const res = await axios.get<Categoria[]>(
-      `${import.meta.env.VITE_API_URL}/admin/categorias`,
-      { withCredentials: true }
-    );
-    setCategorias(res.data);
+    try {
+      // 💡 CORREGIDO: Usando el header de Authorization
+      const res = await axios.get<Categoria[]>(
+        `${import.meta.env.VITE_API_URL}/admin/categorias`,
+        getAuthHeaders() // Usa el header de autenticación
+      );
+      setCategorias(res.data);
+    } catch (error) {
+      console.error("Error al cargar categorías:", error);
+    }
   };
 
   const uploadImage = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append("imagen", file);
 
+    // 💡 CORREGIDO: Usando el header de Authorization
     const res = await axios.post<{ url: string }>(
       `${import.meta.env.VITE_API_URL}/productos/upload`,
       formData,
       {
-        headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: true,
+        ...getAuthHeaders(), // Usa el header de autenticación
+        headers: {
+          "Content-Type": "multipart/form-data",
+          ...getAuthHeaders().headers, // Fusiona con el header de Auth
+        },
       }
     );
-
     return res.data.url;
   };
 
@@ -93,17 +122,19 @@ export default function PanelAdmin() {
       };
 
       if (editing) {
+        // 💡 CORREGIDO: Usando el header de Authorization
         await axios.put(
           `${import.meta.env.VITE_API_URL}/admin/productos/${editing.id}`,
           data,
-          { withCredentials: true }
+          getAuthHeaders()
         );
         alert("✅ Producto actualizado");
       } else {
+        // 💡 CORREGIDO: Usando el header de Authorization
         await axios.post(
           `${import.meta.env.VITE_API_URL}/admin/productos`,
           data,
-          { withCredentials: true }
+          getAuthHeaders()
         );
         alert("✅ Producto creado");
       }
@@ -145,11 +176,16 @@ export default function PanelAdmin() {
 
   const handleDelete = async (id: number) => {
     if (!confirm("¿Seguro que quieres eliminar este producto?")) return;
-    await axios.delete(
-      `${import.meta.env.VITE_API_URL}/admin/productos/${id}`,
-      { withCredentials: true }
-    );
-    fetchProductos();
+    try {
+      // 💡 CORREGIDO: Usando el header de Authorization
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/admin/productos/${id}`,
+        getAuthHeaders()
+      );
+      fetchProductos();
+    } catch (error) {
+      console.error("Error al eliminar producto:", error);
+    }
   };
 
   return (
@@ -222,16 +258,6 @@ export default function PanelAdmin() {
               />
               {form.imagen && (
                 <img src={form.imagen} alt="img1" className="mt-2 w-32" />
-              )}
-            </div>
-            <div>
-              <label className="block text-sm mb-1">Imagen 2</label>
-              <input
-                type="file"
-                onChange={(e) => setFile2(e.target.files?.[0] || null)}
-              />
-              {form.imagen2 && (
-                <img src={form.imagen2} alt="img2" className="mt-2 w-32" />
               )}
             </div>
           </div>
