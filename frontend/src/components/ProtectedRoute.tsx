@@ -18,15 +18,11 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       }
 
       try {
-        const res = await fetch(
-          "https://zent-1wxm.onrender.com/api/auth/verify",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/verify`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setIsValid(res.ok);
       } catch (err) {
         setIsValid(false);
@@ -36,13 +32,9 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     checkAuth();
   }, []);
 
-  if (isValid === null) {
-    return <p className="text-white">Verificando sesión...</p>; // loader temporal
-  }
-
-  if (!isValid) {
-    return <Navigate to="/login" replace />;
-  }
+  if (isValid === null)
+    return <p className="text-white">Verificando sesión...</p>;
+  if (!isValid) return <Navigate to="/login" replace />;
 
   return <>{children}</>;
 };

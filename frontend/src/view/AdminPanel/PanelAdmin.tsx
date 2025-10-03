@@ -23,7 +23,6 @@ export default function PanelAdmin() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [editing, setEditing] = useState<Producto | null>(null);
 
-  // Campos del formulario
   const [form, setForm] = useState({
     nombre: "",
     precio: "",
@@ -38,9 +37,6 @@ export default function PanelAdmin() {
   const [file1, setFile1] = useState<File | null>(null);
   const [file2, setFile2] = useState<File | null>(null);
 
-  // =========================
-  // FETCH inicial
-  // =========================
   useEffect(() => {
     fetchProductos();
     fetchCategorias();
@@ -48,21 +44,20 @@ export default function PanelAdmin() {
 
   const fetchProductos = async () => {
     const res = await axios.get<Producto[]>(
-      `${import.meta.env.VITE_API_URL}/productos`
+      `${import.meta.env.VITE_API_URL}/admin/productos`,
+      { withCredentials: true }
     );
     setProductos(res.data);
   };
 
   const fetchCategorias = async () => {
     const res = await axios.get<Categoria[]>(
-      `${import.meta.env.VITE_API_URL}/categorias`
+      `${import.meta.env.VITE_API_URL}/admin/categorias`,
+      { withCredentials: true }
     );
     setCategorias(res.data);
   };
 
-  // =========================
-  // Upload imágenes
-  // =========================
   const uploadImage = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append("imagen", file);
@@ -72,18 +67,15 @@ export default function PanelAdmin() {
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
       }
     );
 
-    return res.data.url; // ✅ URL de Cloudinary
+    return res.data.url;
   };
 
-  // =========================
-  // Crear / Actualizar producto
-  // =========================
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       let imagenUrl = form.imagen;
       let imagen2Url = form.imagen2;
@@ -102,12 +94,17 @@ export default function PanelAdmin() {
 
       if (editing) {
         await axios.put(
-          `${import.meta.env.VITE_API_URL}/productos/${editing.id}`,
-          data
+          `${import.meta.env.VITE_API_URL}/admin/productos/${editing.id}`,
+          data,
+          { withCredentials: true }
         );
         alert("✅ Producto actualizado");
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/productos`, data);
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/admin/productos`,
+          data,
+          { withCredentials: true }
+        );
         alert("✅ Producto creado");
       }
 
@@ -132,9 +129,6 @@ export default function PanelAdmin() {
     }
   };
 
-  // =========================
-  // Editar
-  // =========================
   const handleEdit = (p: Producto) => {
     setEditing(p);
     setForm({
@@ -149,12 +143,12 @@ export default function PanelAdmin() {
     });
   };
 
-  // =========================
-  // Eliminar
-  // =========================
   const handleDelete = async (id: number) => {
     if (!confirm("¿Seguro que quieres eliminar este producto?")) return;
-    await axios.delete(`${import.meta.env.VITE_API_URL}/productos/${id}`);
+    await axios.delete(
+      `${import.meta.env.VITE_API_URL}/admin/productos/${id}`,
+      { withCredentials: true }
+    );
     fetchProductos();
   };
 
@@ -179,7 +173,6 @@ export default function PanelAdmin() {
             value={form.nombre}
             onChange={(e) => setForm({ ...form, nombre: e.target.value })}
           />
-
           <input
             type="number"
             placeholder="Precio"
@@ -187,7 +180,6 @@ export default function PanelAdmin() {
             value={form.precio}
             onChange={(e) => setForm({ ...form, precio: e.target.value })}
           />
-
           <input
             type="number"
             placeholder="Stock"
@@ -195,14 +187,12 @@ export default function PanelAdmin() {
             value={form.stock}
             onChange={(e) => setForm({ ...form, stock: e.target.value })}
           />
-
           <textarea
             placeholder="Descripción"
             className="w-full p-2 rounded bg-gray-800"
             value={form.descripcion}
             onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
           />
-
           <input
             type="text"
             placeholder="Link"
@@ -210,7 +200,6 @@ export default function PanelAdmin() {
             value={form.link}
             onChange={(e) => setForm({ ...form, link: e.target.value })}
           />
-
           <select
             className="w-full p-2 rounded bg-gray-800"
             value={form.categoria}
@@ -233,6 +222,16 @@ export default function PanelAdmin() {
               />
               {form.imagen && (
                 <img src={form.imagen} alt="img1" className="mt-2 w-32" />
+              )}
+            </div>
+            <div>
+              <label className="block text-sm mb-1">Imagen 2</label>
+              <input
+                type="file"
+                onChange={(e) => setFile2(e.target.files?.[0] || null)}
+              />
+              {form.imagen2 && (
+                <img src={form.imagen2} alt="img2" className="mt-2 w-32" />
               )}
             </div>
           </div>
