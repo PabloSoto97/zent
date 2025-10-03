@@ -11,7 +11,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://zent-app.onrender.com/api/auth/login", {
+      const res = await fetch("https://zent-1wxm.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
