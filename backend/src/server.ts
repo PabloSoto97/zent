@@ -26,7 +26,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", // Frontend en dev
-      "zent-app.vercel.app", // 🔹 reemplazar con el dominio de tu Vercel
+      "https://zent-app.vercel.app", // 🔹 reemplazar con el dominio de tu Vercel
     ],
     credentials: true,
   })
