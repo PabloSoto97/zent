@@ -47,12 +47,16 @@ export default function PanelAdmin() {
   }, []);
 
   const fetchProductos = async () => {
-    const res = await axios.get("https://zent-app.onrender.com/api/productos");
+    const res = await axios.get<Producto[]>(
+      `${import.meta.env.VITE_API_URL}/productos`
+    );
     setProductos(res.data);
   };
 
   const fetchCategorias = async () => {
-    const res = await axios.get("https://zent-app.onrender.com/api/categorias");
+    const res = await axios.get<Categoria[]>(
+      `${import.meta.env.VITE_API_URL}/categorias`
+    );
     setCategorias(res.data);
   };
 
@@ -63,8 +67,8 @@ export default function PanelAdmin() {
     const formData = new FormData();
     formData.append("imagen", file);
 
-    const res = await axios.post(
-      "https://zent-app.onrender.com/api/productos/upload",
+    const res = await axios.post<{ url: string }>(
+      `${import.meta.env.VITE_API_URL}/productos/upload`,
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
@@ -98,12 +102,12 @@ export default function PanelAdmin() {
 
       if (editing) {
         await axios.put(
-          `https://zent-app.onrender.com/productos/${editing.id}`,
+          `${import.meta.env.VITE_API_URL}/productos/${editing.id}`,
           data
         );
         alert("✅ Producto actualizado");
       } else {
-        await axios.post("https://zent-app.onrender.com/productos", data);
+        await axios.post(`${import.meta.env.VITE_API_URL}/productos`, data);
         alert("✅ Producto creado");
       }
 
@@ -150,7 +154,7 @@ export default function PanelAdmin() {
   // =========================
   const handleDelete = async (id: number) => {
     if (!confirm("¿Seguro que quieres eliminar este producto?")) return;
-    await axios.delete(`https://zent-app.onrender.com/productos/${id}`);
+    await axios.delete(`${import.meta.env.VITE_API_URL}/productos/${id}`);
     fetchProductos();
   };
 
@@ -159,7 +163,6 @@ export default function PanelAdmin() {
       <h1 className="text-3xl font-bold mb-6">🛠️ Panel de Administración</h1>
 
       {/* Formulario */}
-
       <div className="max-w-3xl mx-auto px-6">
         <form
           onSubmit={handleSubmit}
