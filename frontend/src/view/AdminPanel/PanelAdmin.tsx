@@ -47,12 +47,12 @@ export default function PanelAdmin() {
   }, []);
 
   const fetchProductos = async () => {
-    const res = await axios.get("http://localhost:4000/productos");
+    const res = await axios.get("https://zent-app.onrender.com/api/productos");
     setProductos(res.data);
   };
 
   const fetchCategorias = async () => {
-    const res = await axios.get("http://localhost:4000/categorias");
+    const res = await axios.get("https://zent-app.onrender.com/api/categorias");
     setCategorias(res.data);
   };
 
@@ -64,7 +64,7 @@ export default function PanelAdmin() {
     formData.append("imagen", file);
 
     const res = await axios.post(
-      "http://localhost:4000/productos/upload",
+      "https://zent-app.onrender.com/api/productos/upload",
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
