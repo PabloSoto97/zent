@@ -126,12 +126,6 @@ export const ScrollingImages = () => {
           alt="logo-6"
           className="rounded-2xl h-12 flex-shrink-0"
         />
-
-        <img
-          src="/logos/8.png"
-          alt="logo-8"
-          className="rounded-2xl h-12 flex-shrink-0"
-        />
       </div>
     </div>
   );
