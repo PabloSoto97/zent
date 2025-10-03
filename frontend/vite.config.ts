@@ -1,20 +1,13 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import tailwindcss from "tailwindcss";
-// import * as path from "path";
-
-// Use Node.js __dirname directly in Vite config
-
+import tailwindcss from "@tailwindcss/vite";
+import path from "path";
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  css: {
-    postcss: {
-      plugins: [tailwindcss],
-    },
-  },
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@": new URL("./src", import.meta.url).pathname,
+      "@": path.resolve(__dirname, "src"),
     },
   },
   base: "/", // importante para rutas absolutas
