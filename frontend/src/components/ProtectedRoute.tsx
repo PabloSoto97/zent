@@ -19,7 +19,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
       try {
         const res = await fetch(
-          "https://zent-app.onrender.com/api/auth/verify",
+          "https://zent-1wxm.onrender.com/api/auth/verify",
           {
             headers: {
               Authorization: `Bearer ${token}`,
