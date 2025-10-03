@@ -18,7 +18,20 @@ import categoriasRoutes from "./routes/categorias";
 import { requireAuth } from "./middleware/authMiddleware";
 
 const app = express();
-app.use(cors());
+
+// ======================
+// 🔹 CORS (IMPORTANTE para Vercel)
+// ======================
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // Frontend en dev
+      "https://TU-FRONTEND.vercel.app", // 🔹 reemplazar con el dominio de tu Vercel
+    ],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 // ======================
@@ -34,11 +47,10 @@ app.use("/api/admin/categorias", requireAuth, categoriasRoutes);
 app.use("/api/admin/productos", requireAuth, productosRouter);
 
 // ======================
-// 🔹 Servir frontend
+// 🔹 Endpoint health (para UptimeRobot)
 // ======================
-app.use(express.static(path.join(__dirname, "../frontend-dist")));
-app.get(/^\/(?!api).*$/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend-dist/index.html"));
+app.get("/health", (req, res) => {
+  res.send("OK");
 });
 
 // ======================
