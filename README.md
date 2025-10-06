@@ -102,10 +102,6 @@ Integración y despliegue en servicios en la nube (Render + Vercel + Neon).
 El objetivo fue construir una aplicación realista de e-commerce, enfocada en la presentación de productos y contacto directo con el cliente.
 
 
-md
-Copiar código
-![Home](./screenshots/home.png)
-![Catálogo](./screenshots/catalogo.png)
 🪄 Autor
 Desarrollado por Pablo Soto
 ```
