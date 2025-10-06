@@ -5,6 +5,7 @@
 /dist
 /.vitepress/dist
 /.temp
+.env
 
 # Logs
 npm-debug.log*
